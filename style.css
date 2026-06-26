@@ -99,6 +99,11 @@ form{
     border-radius: 10px;
 }
 
+/* Styles the logged workouts section with top margin */
+#logged-workouts{
+   margin-top: 20px;
+}
+
 /* Styles the footer with center alignment, top margin, and text color */
 footer{
     text-align: center;
