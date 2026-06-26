@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- This is a simple gym tracking app that allows users to log their workouts and track their progress over time. -->
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <title>Apex Performance</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js" defer></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Apex Performance</h1>
+
+            <div id="workout-log">   
+                <h2>Today's Workout Log</h2>
+
+                <!-- Exercise Log Form -->
+                <form id="workout-form">
+                    <label for="exercise">Exercise:</label>
+                    <input type="text" id="exercise" name="exercise" required>
+
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" name="weight" required>
+
+                    <label for="sets">Sets:</label>
+                    <input type="number" id="sets" name="sets" required>
+
+                    <label for="reps">Reps:</label>
+                    <input type="number" id="reps" name="reps" required>
+
+                    <button type="button">Add Exercise</button>
+                    <button type="submit">Log Workout</button>
+                </form>
+
+            </div>
+
+            <div id="progress-tracker">
+                <h2>Progress Tracker</h2>
+                <p>This is where you can track your progress over time.</p>
+
+                <!--Personal Records-->
+                <div id="personal-records">
+                    <h3>Personal Records</h3>
+                    <p>Track your best performances in core exercises.</p>
+                    <div class="pb-card">
+                        <h4>Bench Press</h4>
+                        <p id="bench-press-record">0 kg</p>
+                    </div>
+                    <div class="pb-card">
+                        <h4>Squat</h4>
+                        <p id="squat-record">0 kg</p>
+                    </div>
+                    <div class="pb-card">
+                        <h4>Deadlift</h4>
+                        <p id="deadlift-record">0 kg</p>
+                    </div>
+                </div>
+
+
+                <!-- Progress Weight Tracking Form -->
+                <div id="weight-tracker">
+                    <h3>Log Weight Progress</h3>
+                    <form id="progress-form">
+                        <label for="date">Date:</label>
+                        <input type="date" id="date" name="date" required>
+
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" name="weight" required>
+
+                        <button type="submit">Log Progress</button>
+                    </form>
+                </div>
+
+                <!-- Progress Chart Display -->
+                <div id="progress-log">
+                    <h3>Progress Chart</h3>
+                    <canvas id="progress-chart" width="400" height="200"></canvas>
+                </div>
+
+            </div>
+            <footer>
+                <p>&copy; 2026 Gym Tracker</p>   
+            </footer>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,107 @@
+/* Removes default margins and padding/browser spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sets the font, background color, text color, and line height for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: white;
+    line-height: 1.6;
+    padding: 30px;
+}
+
+/* Styles the container to center it and set a maximum width */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Styles the headings with center alignment and spacing */
+h1{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Styles the subheadings with spacing */
+h2{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+/* input fields */
+input{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background-color: #2b2b2b;
+    color: white;
+}
+
+/* Styles the buttons with padding, border radius, cursor, background color, text color, and font weight */
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #00b894;
+    color: white;
+    font-weight: bold;
+}
+
+/* Styles the personal best cards with background color, padding, border radius, margin, border, and transition effect */
+.pb-card {
+    background-color: #1f1f1f;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border-left: 5px solid #00b894;
+    transition: transform 0.2s ease;
+}
+
+/* Adds a hover effect to the buttons to change the background color */
+button:hover {
+    background-color: #00a383;
+}
+
+/* Adds a hover effect to the personal best cards to slightly lift them up */
+.pb-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Styles the workout log and progress tracker sections with bottom margin */
+#workout-log,
+#progress-tracker {
+    margin-bottom: 40px;
+}
+
+/* Styles the personal records and weight tracker sections with top margin */
+#personal-records {
+    margin-top: 25px;
+}
+
+/* Styles the weight tracker section with top margin */
+#weight-tracker {
+margin-top: 25px;
+}
+
+/* Styles the form to display its elements in a column with spacing, background color, padding, and border radius */
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Styles the footer with center alignment, top margin, and text color */
+footer{
+    text-align: center;
+    margin-top: 50px;
+    color: grey;
+}
