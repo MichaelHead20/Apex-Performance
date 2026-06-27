@@ -34,6 +34,7 @@ workoutForm.addEventListener("submit", function (event) {
 });
 
 const progressForm = document.getElementById("progress-form");
+const loggedWeight = document.getElementById("logged-weight");
 
 const weightDateInput = document.getElementById("weight-date");
 const bodyWeightInput = document.getElementById("body-weight");
@@ -45,4 +46,11 @@ progressForm.addEventListener("submit", function (event) {
     console.log("Date: " + weightDateInput.value);
     console.log("Weight: " + bodyWeightInput.value + " kg");
 
+    const weightCard = document.createElement("div");
+    weightCard.className = "weight-card";
+    weightCard.textContent = "Date: " + weightDateInput.value + ", Weight: " + bodyWeightInput.value + " kg";
+    
+    loggedWeight.appendChild(weightCard);
+
+    progressForm.reset();
 });
