@@ -8,7 +8,6 @@ const repsInput = document.getElementById("reps");
 
 workoutForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    console.log(event);
 
     const workoutCard = document.createElement("div");
     workoutCard.className = "workout-card";
@@ -32,4 +31,18 @@ workoutForm.addEventListener("submit", function (event) {
     loggedWorkouts.appendChild(workoutCard);
 
     workoutForm.reset();
+});
+
+const progressForm = document.getElementById("progress-form");
+
+const weightDateInput = document.getElementById("weight-date");
+const bodyWeightInput = document.getElementById("body-weight");
+
+progressForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    
+    console.log("weight logged!");
+    console.log("Date: " + weightDateInput.value);
+    console.log("Weight: " + bodyWeightInput.value + " kg");
+
 });
