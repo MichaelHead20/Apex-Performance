@@ -23,6 +23,7 @@ workoutForm.addEventListener("submit", function (event) {
     const exerciseWeight = document.createElement("p");
     const exerciseSets = document.createElement("p");
     const exerciseReps = document.createElement("p");
+    const deleteWorkoutButton = document.createElement("button");
 
     // Populate the workout card with the user's input values
     workoutCard.className = "workout-card";
@@ -30,12 +31,21 @@ workoutForm.addEventListener("submit", function (event) {
     exerciseWeight.textContent = "Weight: " + exerciseWeightInput.value + " kg";
     exerciseSets.textContent = "Sets: " + setsInput.value;
     exerciseReps.textContent = "Reps: " + repsInput.value;
+    deleteWorkoutButton.type = "button";
+    deleteWorkoutButton.textContent = "🗑 Delete";
+
+    //Tell the Delete button what to do when clicked
+    deleteWorkoutButton.addEventListener("click", function(){
+        //removes the workout added by user
+        workoutCard.remove();
+    })
 
     //build the card
     workoutCard.appendChild(exerciseTitle);
     workoutCard.appendChild(exerciseWeight);
     workoutCard.appendChild(exerciseSets);
     workoutCard.appendChild(exerciseReps);
+    workoutCard.appendChild(deleteWorkoutButton);
     loggedWorkouts.appendChild(workoutCard);
 
     // Reset the form fields after submission
@@ -63,11 +73,20 @@ progressForm.addEventListener("submit", function (event) {
     const weightCard = document.createElement("div");
     const weightDateTitle = document.createElement("h4");
     const weightValue = document.createElement("p");
+    const deleteWeightButton = document.createElement("button");
     
     //populate the card with the date and weight values from the input fields
     weightCard.className = "weight-card";
     weightDateTitle.textContent = "📅 Date: " + weightDateInput.value;
     weightValue.textContent = "⚖️ Weight: " + bodyWeightInput.value + " kg";
+    deleteWeightButton.type = "button";
+    deleteWeightButton.textContent = "🗑 Delete";
+
+    //Tell the delete button what to do when clicked
+    deleteWeightButton.addEventListener("click", function (event){
+        //removes the weight card added by user
+        weightCard.remove();
+    });
     
     //build the card
     weightCard.appendChild(weightDateTitle);
