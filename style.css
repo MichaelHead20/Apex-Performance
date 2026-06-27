@@ -87,6 +87,7 @@ button:hover {
 /* Styles the weight tracker section with top margin */
 #weight-tracker {
 margin-top: 25px;
+margin-bottom: 25px;
 }
 
 /* Styles the form to display its elements in a column with spacing, background color, padding, and border radius */

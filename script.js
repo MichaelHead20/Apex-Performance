@@ -41,15 +41,18 @@ const bodyWeightInput = document.getElementById("body-weight");
 
 progressForm.addEventListener("submit", function (event) {
     event.preventDefault();
-    
-    console.log("weight logged!");
-    console.log("Date: " + weightDateInput.value);
-    console.log("Weight: " + bodyWeightInput.value + " kg");
 
     const weightCard = document.createElement("div");
-    weightCard.className = "weight-card";
-    weightCard.textContent = "Date: " + weightDateInput.value + ", Weight: " + bodyWeightInput.value + " kg";
+    const weightDateTitle = document.createElement("h4");
+    const weightValue = document.createElement("p");
     
+    weightCard.className = "weight-card";
+    weightDateTitle.textContent = "📅 Date: " + weightDateInput.value;
+    weightValue.textContent = "⚖️ Weight: " + bodyWeightInput.value + " kg";
+    
+    weightCard.appendChild(weightDateTitle);
+    weightCard.appendChild(weightValue);
+
     loggedWeight.appendChild(weightCard);
 
     progressForm.reset();
