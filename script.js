@@ -12,11 +12,8 @@ const exerciseWeightInput = document.getElementById("exercise-weight");
 const setsInput = document.getElementById("sets");
 const repsInput = document.getElementById("reps");
 
-//Event listener for the workout form submission
-workoutForm.addEventListener("submit", function (event) {
-    //prevent the default form submission behavior to avoid page reload
-    event.preventDefault();
-
+//function to create a workout card to display the logged workout
+function createWorkoutCard(workout) {
     // Create a new workout card element to display the logged workout
     const workoutCard = document.createElement("div");
     const exerciseTitle = document.createElement("h4");
@@ -27,10 +24,10 @@ workoutForm.addEventListener("submit", function (event) {
 
     // Populate the workout card with the user's input values
     workoutCard.className = "workout-card";
-    exerciseTitle.textContent = exerciseInput.value;
-    exerciseWeight.textContent = "Weight: " + exerciseWeightInput.value + " kg";
-    exerciseSets.textContent = "Sets: " + setsInput.value;
-    exerciseReps.textContent = "Reps: " + repsInput.value;
+    exerciseTitle.textContent = workout.exercise;
+    exerciseWeight.textContent = "Weight: " + workout.weight + " kg";
+    exerciseSets.textContent = "Sets: " + workout.sets;
+    exerciseReps.textContent = "Reps: " + workout.reps;
     deleteWorkoutButton.type = "button";
     deleteWorkoutButton.textContent = "🗑 Delete";
 
@@ -46,7 +43,43 @@ workoutForm.addEventListener("submit", function (event) {
     workoutCard.appendChild(exerciseSets);
     workoutCard.appendChild(exerciseReps);
     workoutCard.appendChild(deleteWorkoutButton);
+
+    //display the card in the logged workouts section
     loggedWorkouts.appendChild(workoutCard);
+}
+
+// load the saved workouts
+const savedWorkouts = localStorage.getItem("workouts") || "[]";
+
+// turns the string into an array
+const workoutsArray = JSON.parse(savedWorkouts);
+
+// create workout cards for each saved workout
+for (const workout of workoutsArray) {
+    createWorkoutCard(workout);
+}
+
+//Event listener for the workout form submission
+workoutForm.addEventListener("submit", function (event) {
+    //prevent the default form submission behavior to avoid page reload
+    event.preventDefault();
+
+    //create a workout object to store the user's input values
+    const workout = {
+        exercise: exerciseInput.value,
+        weight: exerciseWeightInput.value,
+        sets: setsInput.value,
+        reps: repsInput.value
+    };
+
+    // adds the new workout
+    workoutsArray.push(workout);
+
+    // convert the array back into a string and save it to local storage
+    localStorage.setItem("workouts", JSON.stringify(workoutsArray));
+
+    //create a workout card to display the logged workout
+    createWorkoutCard(workout);
 
     // Reset the form fields after submission
     workoutForm.reset();
