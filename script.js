@@ -33,6 +33,15 @@ function createWorkoutCard(workout) {
 
     //Tell the Delete button what to do when clicked
     deleteWorkoutButton.addEventListener("click", function(){
+
+        //removes the workout from the workouts array
+        workoutsArray = workoutsArray.filter(currentWorkout => {
+            return currentWorkout.id !== workout.id;
+        });
+
+        //convert the array back into a string and save it to local storage
+        localStorage.setItem("workouts", JSON.stringify(workoutsArray));
+
         //removes the workout added by user
         workoutCard.remove();
     })
@@ -52,7 +61,7 @@ function createWorkoutCard(workout) {
 const savedWorkouts = localStorage.getItem("workouts") || "[]";
 
 // turns the string into an array
-const workoutsArray = JSON.parse(savedWorkouts);
+let workoutsArray = JSON.parse(savedWorkouts);
 
 // create workout cards for each saved workout
 for (const workout of workoutsArray) {
@@ -66,10 +75,11 @@ workoutForm.addEventListener("submit", function (event) {
 
     //create a workout object to store the user's input values
     const workout = {
+        id: crypto.randomUUID(),
         exercise: exerciseInput.value,
-        weight: exerciseWeightInput.value,
-        sets: setsInput.value,
-        reps: repsInput.value
+        weight: Number(exerciseWeightInput.value),
+        sets: Number(setsInput.value),
+        reps: Number(repsInput.value)
     };
 
     // adds the new workout
