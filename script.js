@@ -14,22 +14,52 @@ const repsInput = document.getElementById("reps");
 
 //function to create a workout card to display the logged workout
 function createWorkoutCard(workout) {
+
+    let isEditing = false; // Flag to track editing state
+
     // Create a new workout card element to display the logged workout
     const workoutCard = document.createElement("div");
+
     const exerciseTitle = document.createElement("h4");
+    const exerciseInput = document.createElement("input");
+
     const exerciseWeight = document.createElement("p");
+    const exerciseWeightInput = document.createElement("input");
+
     const exerciseSets = document.createElement("p");
+    const exerciseSetsInput = document.createElement("input");
+
     const exerciseReps = document.createElement("p");
+    const exerciseRepsInput = document.createElement("input");
+
     const deleteWorkoutButton = document.createElement("button");
+    const editWorkoutButton = document.createElement("button");
 
     // Populate the workout card with the user's input values
     workoutCard.className = "workout-card";
+
     exerciseTitle.textContent = workout.exercise;
+    exerciseInput.value = workout.exercise;
+
     exerciseWeight.textContent = "Weight: " + workout.weight + " kg";
+    exerciseWeightInput.value = workout.weight;
+
     exerciseSets.textContent = "Sets: " + workout.sets;
+    exerciseSetsInput.value = workout.sets;
+
     exerciseReps.textContent = "Reps: " + workout.reps;
+    exerciseRepsInput.value = workout.reps;
+
     deleteWorkoutButton.type = "button";
     deleteWorkoutButton.textContent = "🗑 Delete";
+    editWorkoutButton.type = "button";
+    editWorkoutButton.textContent = "✏️ Edit";
+
+    // Hide the input fields initially
+    exerciseInput.style.display = "none";
+    exerciseWeightInput.style.display = "none";
+    exerciseSetsInput.style.display = "none";
+    exerciseRepsInput.style.display = "none";
 
     //Tell the Delete button what to do when clicked
     deleteWorkoutButton.addEventListener("click", function(){
@@ -46,12 +76,64 @@ function createWorkoutCard(workout) {
         workoutCard.remove();
     })
 
+    editWorkoutButton.addEventListener("click", function () {
+
+        isEditing = !isEditing; // Toggle editing state
+
+        if (isEditing) {
+            // switch to edit mode
+            exerciseTitle.style.display = "none";
+            exerciseWeight.style.display = "none";
+            exerciseSets.style.display = "none";
+            exerciseReps.style.display = "none";
+
+            exerciseInput.style.display = "block";
+            exerciseWeightInput.style.display = "block";
+            exerciseSetsInput.style.display = "block";
+            exerciseRepsInput.style.display = "block";
+
+            editWorkoutButton.textContent = "💾 Save";
+        } else {
+            // SAVE mode
+
+            workout.exercise = exerciseInput.value;
+            workout.weight = Number(exerciseWeightInput.value);
+            workout.sets = Number(exerciseSetsInput.value);
+            workout.reps = Number(exerciseRepsInput.value);
+
+            // Update the displayed values
+            exerciseTitle.textContent = workout.exercise;
+            exerciseWeight.textContent = "Weight: " + workout.weight + " kg";
+            exerciseSets.textContent = "Sets: " + workout.sets;
+            exerciseReps.textContent = "Reps: " + workout.reps;
+
+            // save the updated workout to local storage
+            localStorage.setItem("workouts", JSON.stringify(workoutsArray));
+
+            // switch back to view mode
+            exerciseTitle.style.display = "block";
+            exerciseWeight.style.display = "block";
+            exerciseSets.style.display = "block";
+            exerciseReps.style.display = "block";
+
+            exerciseInput.style.display = "none";
+            exerciseWeightInput.style.display = "none";
+            exerciseSetsInput.style.display = "none";
+            exerciseRepsInput.style.display = "none";
+
+            editWorkoutButton.textContent = "✏️ Edit";
+
+            isEditing = false; // Reset editing state
+        }
+    });
+
     //build the card
     workoutCard.appendChild(exerciseTitle);
     workoutCard.appendChild(exerciseWeight);
     workoutCard.appendChild(exerciseSets);
     workoutCard.appendChild(exerciseReps);
     workoutCard.appendChild(deleteWorkoutButton);
+    workoutCard.appendChild(editWorkoutButton);
 
     //display the card in the logged workouts section
     loggedWorkouts.appendChild(workoutCard);
@@ -75,11 +157,12 @@ workoutForm.addEventListener("submit", function (event) {
 
     //create a workout object to store the user's input values
     const workout = {
-        id: crypto.randomUUID(),
+        id: crypto.randomUUID(), // generates a unique ID for each workout
         exercise: exerciseInput.value,
         weight: Number(exerciseWeightInput.value),
         sets: Number(setsInput.value),
-        reps: Number(repsInput.value)
+        reps: Number(repsInput.value),
+        date: new Date().toISOString().split("T")[0]
     };
 
     // adds the new workout
