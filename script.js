@@ -12,6 +12,8 @@ const exerciseWeightInput = document.getElementById("exercise-weight");
 const setsInput = document.getElementById("sets");
 const repsInput = document.getElementById("reps");
 
+
+
 //function to create a workout card to display the logged workout
 function createWorkoutCard(workout) {
 
@@ -129,15 +131,25 @@ function createWorkoutCard(workout) {
 
     //build the card
     workoutCard.appendChild(exerciseTitle);
+    workoutCard.appendChild(exerciseInput);
+
     workoutCard.appendChild(exerciseWeight);
+    workoutCard.appendChild(exerciseWeightInput);
+
     workoutCard.appendChild(exerciseSets);
+    workoutCard.appendChild(exerciseSetsInput);
+
     workoutCard.appendChild(exerciseReps);
+    workoutCard.appendChild(exerciseRepsInput);
+
     workoutCard.appendChild(deleteWorkoutButton);
     workoutCard.appendChild(editWorkoutButton);
 
     //display the card in the logged workouts section
     loggedWorkouts.appendChild(workoutCard);
 }
+
+
 
 // load the saved workouts
 const savedWorkouts = localStorage.getItem("workouts") || "[]";
@@ -149,6 +161,8 @@ let workoutsArray = JSON.parse(savedWorkouts);
 for (const workout of workoutsArray) {
     createWorkoutCard(workout);
 }
+
+
 
 //Event listener for the workout form submission
 workoutForm.addEventListener("submit", function (event) {
@@ -178,48 +192,104 @@ workoutForm.addEventListener("submit", function (event) {
     workoutForm.reset();
 });
 
+
+
 //weight progress form
 
 //Main weight progress form
 const progressForm = document.getElementById("progress-form");
 
-//container for logged weight entries
-const loggedWeight = document.getElementById("logged-weight");
+//get the current weight display element
+const currentWeightDiv = document.getElementById("current-weight");
 
 //user input fields for date and body weight
 const weightDateInput = document.getElementById("weight-date");
 const bodyWeightInput = document.getElementById("body-weight");
+
+//load the saved weight history from local storage or initialize an empty array if none exists
+let weightHistoryArray = JSON.parse(localStorage.getItem("weightHistory")) || [];
+
+
+//function to delete the latest weight entry
+function deleteLatestWeight() {
+
+    //get the current weight display element
+    if (weightHistoryArray.length === 0) {
+         return; // No weight entries to delete
+    }
+
+    //remove last etry from DATA
+    weightHistoryArray.pop();
+
+    //update stroage
+    localStorage.setItem("weightHistory", JSON.stringify(weightHistoryArray));
+
+    //update the current weight display
+    if (weightHistoryArray.length > 0) {
+        //get the latest weight entry
+        const latestWeightEntry = weightHistoryArray[weightHistoryArray.length - 1];
+        updateCurrentWeight(latestWeightEntry);
+    } else {
+        currentWeightDiv.innerHTML = "No weight entries logged yet.";
+    }
+};
+
+
+
+//function to update the current weight display
+function updateCurrentWeight(weightEntry) {
+
+    if (!currentWeightDiv) return; // Exit if the element is not found
+
+    //update the current weight display with the latest weight entry
+    currentWeightDiv.innerHTML =
+        "Current Weight: " + weightEntry.weight + " kg" +
+        "<br>" +
+        "Last updated: " + weightEntry.date +
+        "<br>" +
+        "<button id='deleteWeightBtn'>🗑 Delete</button>";
+
+    //add event listener to the delete button
+    const deleteWeightBtn = document.getElementById("deleteWeightBtn");
+
+    if (deleteWeightBtn) {
+        deleteWeightBtn.addEventListener("click", deleteLatestWeight);
+    }
+}
+
+
+
+//display the logged weight entries
+if (weightHistoryArray.length > 0) {
+    //get the latest weight entry
+    const latestWeightEntry = weightHistoryArray[weightHistoryArray.length - 1];
+
+    //update the current weight display with the latest weight entry
+    updateCurrentWeight(latestWeightEntry);
+}
+
+
 
 //listener for the weight progress form submission
 progressForm.addEventListener("submit", function (event) {
     //prevent the default form submission behavior
     event.preventDefault();
 
-    //create a card to display the weight entry with date and weight
-    const weightCard = document.createElement("div");
-    const weightDateTitle = document.createElement("h4");
-    const weightValue = document.createElement("p");
-    const deleteWeightButton = document.createElement("button");
-    
-    //populate the card with the date and weight values from the input fields
-    weightCard.className = "weight-card";
-    weightDateTitle.textContent = "📅 Date: " + weightDateInput.value;
-    weightValue.textContent = "⚖️ Weight: " + bodyWeightInput.value + " kg";
-    deleteWeightButton.type = "button";
-    deleteWeightButton.textContent = "🗑 Delete";
+    //create a weight entry object to store the user's input values
+    const weightEntry = {
+        id: crypto.randomUUID(), // generates a unique ID for each weight entry
+        date: weightDateInput.value,
+        weight: Number(bodyWeightInput.value)
+    };
 
-    //Tell the delete button what to do when clicked
-    deleteWeightButton.addEventListener("click", function (event){
-        //removes the weight card added by user
-        weightCard.remove();
-    });
-    
-    //build the card
-    weightCard.appendChild(weightDateTitle);
-    weightCard.appendChild(weightValue);
+    //add the new weight entry to the array
+    weightHistoryArray.push(weightEntry);
 
-    //display the card in the logged weight section
-    loggedWeight.appendChild(weightCard);
+    //convert the array back into a string and save it to local storage
+    localStorage.setItem("weightHistory", JSON.stringify(weightHistoryArray));
+
+    //update the current weight display
+    updateCurrentWeight(weightEntry);
 
     // Reset the form fields after submission
     progressForm.reset();
