@@ -12,6 +12,10 @@ const exerciseWeightInput = document.getElementById("exercise-weight");
 const setsInput = document.getElementById("sets");
 const repsInput = document.getElementById("reps");
 
+//function to get today's date in YYYY-MM-DD format
+function getTodaysDate() {
+    return new Date().toISOString().split("T")[0]; // Returns the date in YYYY-MM-DD format
+}
 
 
 //function to create a workout card to display the logged workout
@@ -23,16 +27,16 @@ function createWorkoutCard(workout) {
     const workoutCard = document.createElement("div");
 
     const exerciseTitle = document.createElement("h4");
-    const exerciseInput = document.createElement("input");
+    const exerciseEditInput = document.createElement("input");
 
     const exerciseWeight = document.createElement("p");
-    const exerciseWeightInput = document.createElement("input");
+    const exerciseWeightEditInput = document.createElement("input");
 
     const exerciseSets = document.createElement("p");
-    const exerciseSetsInput = document.createElement("input");
+    const exerciseSetsEditInput = document.createElement("input");
 
     const exerciseReps = document.createElement("p");
-    const exerciseRepsInput = document.createElement("input");
+    const exerciseRepsEditInput = document.createElement("input");
 
     const deleteWorkoutButton = document.createElement("button");
     const editWorkoutButton = document.createElement("button");
@@ -41,16 +45,16 @@ function createWorkoutCard(workout) {
     workoutCard.className = "workout-card";
 
     exerciseTitle.textContent = workout.exercise;
-    exerciseInput.value = workout.exercise;
+    exerciseEditInput.value = workout.exercise;
 
     exerciseWeight.textContent = "Weight: " + workout.weight + " kg";
-    exerciseWeightInput.value = workout.weight;
+    exerciseWeightEditInput.value = workout.weight;
 
     exerciseSets.textContent = "Sets: " + workout.sets;
-    exerciseSetsInput.value = workout.sets;
+    exerciseSetsEditInput.value = workout.sets;
 
     exerciseReps.textContent = "Reps: " + workout.reps;
-    exerciseRepsInput.value = workout.reps;
+    exerciseRepsEditInput.value = workout.reps;
 
     deleteWorkoutButton.type = "button";
     deleteWorkoutButton.textContent = "🗑 Delete";
@@ -58,10 +62,10 @@ function createWorkoutCard(workout) {
     editWorkoutButton.textContent = "✏️ Edit";
 
     // Hide the input fields initially
-    exerciseInput.style.display = "none";
-    exerciseWeightInput.style.display = "none";
-    exerciseSetsInput.style.display = "none";
-    exerciseRepsInput.style.display = "none";
+    exerciseEditInput.style.display = "none";
+    exerciseWeightEditInput.style.display = "none";
+    exerciseSetsEditInput.style.display = "none";
+    exerciseRepsEditInput.style.display = "none";
 
     //Tell the Delete button what to do when clicked
     deleteWorkoutButton.addEventListener("click", function(){
@@ -89,19 +93,19 @@ function createWorkoutCard(workout) {
             exerciseSets.style.display = "none";
             exerciseReps.style.display = "none";
 
-            exerciseInput.style.display = "block";
-            exerciseWeightInput.style.display = "block";
-            exerciseSetsInput.style.display = "block";
-            exerciseRepsInput.style.display = "block";
+            exerciseEditInput.style.display = "block";
+            exerciseWeightEditInput.style.display = "block";
+            exerciseSetsEditInput.style.display = "block";
+            exerciseRepsEditInput.style.display = "block";
 
             editWorkoutButton.textContent = "💾 Save";
         } else {
             // SAVE mode
 
-            workout.exercise = exerciseInput.value;
-            workout.weight = Number(exerciseWeightInput.value);
-            workout.sets = Number(exerciseSetsInput.value);
-            workout.reps = Number(exerciseRepsInput.value);
+            workout.exercise = exerciseEditInput.value;
+            workout.weight = Number(exerciseWeightEditInput.value);
+            workout.sets = Number(exerciseSetsEditInput.value);
+            workout.reps = Number(exerciseRepsEditInput.value);
 
             // Update the displayed values
             exerciseTitle.textContent = workout.exercise;
@@ -118,10 +122,10 @@ function createWorkoutCard(workout) {
             exerciseSets.style.display = "block";
             exerciseReps.style.display = "block";
 
-            exerciseInput.style.display = "none";
-            exerciseWeightInput.style.display = "none";
-            exerciseSetsInput.style.display = "none";
-            exerciseRepsInput.style.display = "none";
+            exerciseEditInput.style.display = "none";
+            exerciseWeightEditInput.style.display = "none";
+            exerciseSetsEditInput.style.display = "none";
+            exerciseRepsEditInput.style.display = "none";
 
             editWorkoutButton.textContent = "✏️ Edit";
 
@@ -131,16 +135,16 @@ function createWorkoutCard(workout) {
 
     //build the card
     workoutCard.appendChild(exerciseTitle);
-    workoutCard.appendChild(exerciseInput);
+    workoutCard.appendChild(exerciseEditInput);
 
     workoutCard.appendChild(exerciseWeight);
-    workoutCard.appendChild(exerciseWeightInput);
+    workoutCard.appendChild(exerciseWeightEditInput);
 
     workoutCard.appendChild(exerciseSets);
-    workoutCard.appendChild(exerciseSetsInput);
+    workoutCard.appendChild(exerciseSetsEditInput);
 
     workoutCard.appendChild(exerciseReps);
-    workoutCard.appendChild(exerciseRepsInput);
+    workoutCard.appendChild(exerciseRepsEditInput);
 
     workoutCard.appendChild(deleteWorkoutButton);
     workoutCard.appendChild(editWorkoutButton);
@@ -159,10 +163,11 @@ let workoutsArray = JSON.parse(savedWorkouts);
 
 // create workout cards for each saved workout
 for (const workout of workoutsArray) {
-    createWorkoutCard(workout);
+    if (workout.date === getTodaysDate()) {
+        // only create cards for workouts logged today
+        createWorkoutCard(workout);
+    }
 }
-
-
 
 //Event listener for the workout form submission
 workoutForm.addEventListener("submit", function (event) {
@@ -185,112 +190,11 @@ workoutForm.addEventListener("submit", function (event) {
     // convert the array back into a string and save it to local storage
     localStorage.setItem("workouts", JSON.stringify(workoutsArray));
 
+ 
     //create a workout card to display the logged workout
     createWorkoutCard(workout);
 
+
     // Reset the form fields after submission
     workoutForm.reset();
-});
-
-
-
-//weight progress form
-
-//Main weight progress form
-const progressForm = document.getElementById("progress-form");
-
-//get the current weight display element
-const currentWeightDiv = document.getElementById("current-weight");
-
-//user input fields for date and body weight
-const weightDateInput = document.getElementById("weight-date");
-const bodyWeightInput = document.getElementById("body-weight");
-
-//load the saved weight history from local storage or initialize an empty array if none exists
-let weightHistoryArray = JSON.parse(localStorage.getItem("weightHistory")) || [];
-
-
-//function to delete the latest weight entry
-function deleteLatestWeight() {
-
-    //get the current weight display element
-    if (weightHistoryArray.length === 0) {
-         return; // No weight entries to delete
-    }
-
-    //remove last etry from DATA
-    weightHistoryArray.pop();
-
-    //update stroage
-    localStorage.setItem("weightHistory", JSON.stringify(weightHistoryArray));
-
-    //update the current weight display
-    if (weightHistoryArray.length > 0) {
-        //get the latest weight entry
-        const latestWeightEntry = weightHistoryArray[weightHistoryArray.length - 1];
-        updateCurrentWeight(latestWeightEntry);
-    } else {
-        currentWeightDiv.innerHTML = "No weight entries logged yet.";
-    }
-};
-
-
-
-//function to update the current weight display
-function updateCurrentWeight(weightEntry) {
-
-    if (!currentWeightDiv) return; // Exit if the element is not found
-
-    //update the current weight display with the latest weight entry
-    currentWeightDiv.innerHTML =
-        "Current Weight: " + weightEntry.weight + " kg" +
-        "<br>" +
-        "Last updated: " + weightEntry.date +
-        "<br>" +
-        "<button id='deleteWeightBtn'>🗑 Delete</button>";
-
-    //add event listener to the delete button
-    const deleteWeightBtn = document.getElementById("deleteWeightBtn");
-
-    if (deleteWeightBtn) {
-        deleteWeightBtn.addEventListener("click", deleteLatestWeight);
-    }
-}
-
-
-
-//display the logged weight entries
-if (weightHistoryArray.length > 0) {
-    //get the latest weight entry
-    const latestWeightEntry = weightHistoryArray[weightHistoryArray.length - 1];
-
-    //update the current weight display with the latest weight entry
-    updateCurrentWeight(latestWeightEntry);
-}
-
-
-
-//listener for the weight progress form submission
-progressForm.addEventListener("submit", function (event) {
-    //prevent the default form submission behavior
-    event.preventDefault();
-
-    //create a weight entry object to store the user's input values
-    const weightEntry = {
-        id: crypto.randomUUID(), // generates a unique ID for each weight entry
-        date: weightDateInput.value,
-        weight: Number(bodyWeightInput.value)
-    };
-
-    //add the new weight entry to the array
-    weightHistoryArray.push(weightEntry);
-
-    //convert the array back into a string and save it to local storage
-    localStorage.setItem("weightHistory", JSON.stringify(weightHistoryArray));
-
-    //update the current weight display
-    updateCurrentWeight(weightEntry);
-
-    // Reset the form fields after submission
-    progressForm.reset();
 });
