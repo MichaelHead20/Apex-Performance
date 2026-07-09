@@ -6,6 +6,7 @@
     <title>Apex Performance - Workout History</title>
     <link rel="stylesheet" href="style.css">
     <script src="JavaScript/sidebar.js" defer></script>
+    <script src="JavaScript/workouts.js" defer></script>
 </head>
 <body>
     <!-- Sidebar Menu Toggle Button -->
@@ -13,14 +14,64 @@
     <!-- Sidebar Navigation Menu -->
     <nav id="sidebar" class="sidebar">
         <button id="close-sidebar" aria-label="Close menu">✕</button>
-        <a href="index.html">Home</a>
+        <a href="homepage.html">Home</a>
         <a href="workoutHistory.html">Workouts</a>
         <a href="weightProgress.html">Weight Tracker</a>
     </nav>
-
-    <div class="container">
-        <h1>Workout History</h1>
-        <p>This is the workout history page.</p>
     </div>
+    
+    <!-- Main Container -->
+    <div class="container">
+
+    <h1>My Workouts</h1>
+
+    <!-- Create Workout Template -->
+    <div id="create-workout">
+
+        <h2>Create Workout</h2>
+
+        <label for="workout-name">
+            Workout Name:
+        </label>
+
+        <input 
+            type="text" 
+            id="workout-name"
+            placeholder="e.g. Push Day"
+        >
+
+        <h3>Exercises</h3>
+
+        <input 
+            type="text"
+            id="exercise-name"
+            placeholder="Exercise name"
+        >
+
+        <button id="add-exercise">
+            Add Exercise
+        </button>
+
+
+        <div id="exercise-list">
+
+        </div>
+
+
+        <button id="save-workout">
+            Save Workout
+        </button>
+
+    </div>
+
+
+    <!-- Saved Workouts -->
+    <div id="saved-workouts">
+
+        <h2>My Workout Templates</h2>
+
+    </div>
+
+</div>
 </body>
 </html>

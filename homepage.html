@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- This is a simple gym tracking app that allows users to log their workouts and track their progress over time. -->
+        <meta name ="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <title>Apex Performance - Home</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="JavaScript/sidebar.js" defer></script>
+        <script src="JavaScript/workouts.js" defer></script>
+        <script src="JavaScript/weight.js" defer></script>
+        <script src="JavaScript/workoutSelector.js" defer></script>
+    </head>
+
+    <body>
+        <!-- Sidebar Menu Toggle Button -->
+        <button id="menu-toggle" aria-label="Open menu">☰</button>
+
+        <!-- Sidebar Navigation Menu -->
+        <nav id="sidebar" class="sidebar">
+            <button id="close-sidebar" aria-label="Close menu">✕</button>
+            <a href="homepage.html">Home</a>
+            <a href="workoutHistory.html">Workouts</a>
+            <a href="weightProgress.html">Weight Tracker</a>
+        </nav>
+
+        <!-- Main Container -->
+        <div class="container">
+            <h1>Apex Performance</h1>
+            <h2>Welcome back!</h2>
+
+            <!-- workout section -->
+            <div id="workout-section">
+                <h2>Start Workout</h2>
+                <h3>Choose Workout</h3>
+                <p>Select a workout routine to get started.</p>
+
+                <!-- Workout Selection -->
+            <div id="workout-selector-container">
+
+                <h3>Start Workout</h3>
+
+                <select id="workout-selector">
+                    <option value="">Select Workout</option>
+                </select>
+
+            </div>
+
+                <div id ="start-workout-container">
+                    <button id="start-workout-button">Start Workout</button>
+                </div>
+            </div>
+
+            <!-- Progress Tracker Section -->
+            <div id="progress-tracker">
+                <h2>Progress Tracker</h2>
+                <p>This is where you can track your progress over time.</p>
+
+                <!--Personal Records-->
+                <div id="personal-records">
+                    <h3>Personal Records</h3>
+                    <p>Track your best performances in core exercises.</p>
+                    <div class="pb-card">
+                        <h4>Bench Press</h4>
+                        <p id="bench-press-record">0 kg</p>
+                    </div>
+                    <div class="pb-card">
+                        <h4>Squat</h4>
+                        <p id="squat-record">0 kg</p>
+                    </div>
+                    <div class="pb-card">
+                        <h4>Deadlift</h4>
+                        <p id="deadlift-record">0 kg</p>
+                    </div>
+                </div>
+
+
+                <!-- Progress Weight Tracking Form -->
+                <div id="weight-tracker">
+                    <h3>Log Weight Progress</h3>
+                    <form id="progress-form">
+                        <label for="weight">Date:</label>
+                        <input type="date" id="weight-date" name="date" required>
+
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="body-weight" name="weight" required>
+
+                        <button type="submit">Log Progress</button>
+                    </form>
+
+                    <!-- Display Logged Weight Progress -->
+                    <div id="logged-weight">
+                        <h3>Last Weigh-In</h3>
+                        <div id="current-weight">No weight entries logged yet.</div>
+                            
+                    </div>
+                </div>
+
+                <!-- Progress Chart Display -->
+                <div id="progress-log">
+                    <h3>Progress Chart</h3>
+                    <canvas id="progress-chart" width="400" height="200"></canvas>
+                </div>
+
+            </div>
+
+            <!-- Footer Section -->
+            <footer>
+                <p>&copy; 2026 Gym Tracker</p>   
+            </footer>
+        </div>
+    </body>
+</html>
