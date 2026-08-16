@@ -1,0 +1,519 @@
+/* ============================================================
+   Design tokens
+   ============================================================ */
+:root {
+    /* Color */
+    --bg: #121212;
+    --surface: #1a1a1a;
+    --surface-raised: #202020;
+    --border: #2a2a2a;
+    --text: #f2f2f2;
+    --text-muted: #9a9a9a;
+    --accent: #00b894;
+    --accent-hover: #00d1a7;
+    --danger: #e05a5a;
+    --danger-hover: #ff6b6b;
+
+    /* Spacing scale (4px base) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+}
+
+/* Removes default margins and padding/browser spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Sets the font, background color, text color, and line height for the body */
+body {
+    font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: var(--space-6) var(--space-4);
+}
+
+/* ============================================================
+   Sidebar navigation
+   ============================================================ */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px; /* hidden off-screen */
+    width: 240px;
+    height: 100%;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    transition: left 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-6) var(--space-5);
+    z-index: 20;
+}
+
+.sidebar.active {
+    left: 0; /* slides into view */
+}
+
+.sidebar #close-sidebar {
+    align-self: flex-end;
+    background: none;
+    color: var(--text-muted);
+    font-size: 18px;
+    padding: var(--space-1) var(--space-2);
+    margin-bottom: var(--space-5);
+}
+
+.sidebar #close-sidebar:hover {
+    background: none;
+    color: var(--text);
+}
+
+/* Styles the sidebar links with padding, margin, border radius, and hover effect */
+.sidebar a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 600;
+    padding: var(--space-3) var(--space-3);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.sidebar a:hover {
+    background-color: var(--surface-raised);
+    color: var(--text);
+}
+
+#menu-toggle {
+    position: fixed;
+    top: var(--space-4);
+    left: var(--space-4);
+    z-index: 10;
+    font-size: 22px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text);
+    cursor: pointer;
+}
+
+#menu-toggle:hover {
+    background: var(--surface-raised);
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: var(--space-4) var(--space-4) 0;
+}
+
+/* ============================================================
+   Typography
+   ============================================================ */
+h1 {
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+}
+
+h2 {
+    font-size: 1.25rem;
+    margin-top: var(--space-7);
+    margin-bottom: var(--space-3);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border);
+}
+
+h3 {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-3);
+}
+
+h4 {
+    font-size: 1rem;
+    margin-bottom: var(--space-1);
+}
+
+p {
+    color: var(--text-muted);
+}
+
+/* "Welcome back!" style subheading directly under the h1 on the homepage */
+.container > h1 + h2 {
+    text-align: center;
+    border-bottom: none;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-top: 0;
+    margin-bottom: var(--space-6);
+}
+
+/* ============================================================
+   Forms
+   ============================================================ */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-1);
+}
+
+input {
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background-color: var(--surface-raised);
+    color: var(--text);
+    font-size: 1rem;
+    transition: border-color 0.15s ease;
+}
+
+input:focus,
+select:focus,
+button:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 184, 148, 0.25);
+}
+
+select {
+    width: 100%;
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    background-color: var(--surface-raised);
+    color: var(--text);
+    font-size: 1rem;
+}
+
+/* ============================================================
+   Buttons
+   ============================================================ */
+button {
+    padding: var(--space-3) var(--space-4);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background-color: var(--accent);
+    color: #08211b;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: var(--accent-hover);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Delete / destructive buttons (created dynamically in JS) */
+.workout-card button,
+#logged-weight button {
+    background-color: transparent;
+    color: var(--danger);
+    border: 1px solid var(--danger);
+    padding: var(--space-2) var(--space-3);
+    font-size: 0.85rem;
+    align-self: flex-start;
+    margin-top: var(--space-3);
+}
+
+.workout-card button:hover,
+#logged-weight button:hover {
+    background-color: var(--danger);
+    color: white;
+}
+
+/* ============================================================
+   Personal records
+   ============================================================ */
+#personal-records {
+    margin-top: var(--space-3);
+}
+
+#progress-tracker {
+    margin-bottom: var(--space-6);
+}
+
+.pb-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+    border-left: 4px solid var(--accent);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.pb-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+}
+
+.pb-card h4 {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.pb-card p {
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Arrange the three PR cards side by side on wider screens */
+@media (min-width: 560px) {
+    #personal-records {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-3);
+    }
+
+    #personal-records h3,
+    #personal-records > p:first-of-type {
+        grid-column: 1 / -1;
+    }
+
+    #personal-records .pb-card {
+        margin-bottom: 0;
+    }
+}
+
+/* ============================================================
+   Workout templates (workoutHistory.html)
+   ============================================================ */
+#create-workout {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-5);
+}
+
+#create-workout input {
+    margin-bottom: var(--space-3);
+}
+
+#exercise-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin: var(--space-3) 0;
+}
+
+#exercise-list p {
+    background-color: var(--surface-raised);
+    color: var(--text);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+}
+
+#save-workout {
+    margin-top: var(--space-3);
+}
+
+#saved-workouts {
+    margin-top: var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.workout-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+}
+
+.workout-card h3 {
+    color: var(--text);
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+}
+
+.workout-card ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.workout-card li {
+    background-color: var(--surface-raised);
+    color: var(--text-muted);
+    padding: var(--space-1) var(--space-3);
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+/* ============================================================
+   Active workout session
+   ============================================================ */
+#session-exercises {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+}
+
+.exercise-card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.exercise-card h3 {
+    color: var(--text);
+    text-transform: none;
+    letter-spacing: normal;
+    font-size: 1.05rem;
+    margin: 0;
+}
+
+.exercise-card input {
+    max-width: 200px;
+}
+
+#finish-workout {
+    width: 100%;
+    padding: var(--space-4);
+    font-size: 1rem;
+}
+
+/* ============================================================
+   Weight tracker
+   ============================================================ */
+#weight-tracker {
+    margin-top: var(--space-3);
+    margin-bottom: var(--space-6);
+}
+
+#logged-weight {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-5);
+    margin-top: var(--space-4);
+}
+
+#logged-weight h3 {
+    margin-top: 0;
+}
+
+#current-weight {
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+/* Link to the weight tracker page shown on the homepage */
+.weight-tracker-link {
+    margin-top: var(--space-5);
+    padding: var(--space-4);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+}
+
+.weight-tracker-link a {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Progress chart canvas */
+#progress-log {
+    margin-bottom: var(--space-6);
+}
+
+#progress-chart {
+    width: 100%;
+    height: auto;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-3);
+}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+footer {
+    text-align: center;
+    margin-top: var(--space-8);
+    padding-bottom: var(--space-6);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ============================================================
+   Small screens
+   ============================================================ */
+@media (max-width: 480px) {
+    body {
+        padding: var(--space-5) var(--space-3);
+    }
+
+    .container {
+        padding: var(--space-2) var(--space-2) 0;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Performance - Weight Progress</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="JavaScript/sidebar.js" defer></script>
+    <script src="JavaScript/weight.js" defer></script>
+</head>
+<body>
+    <!-- Sidebar Menu Toggle Button -->
+    <button id="menu-toggle" aria-label="Open menu">☰</button>
+
+    <!-- Sidebar Navigation Menu -->
+    <nav id="sidebar" class="sidebar">
+        <button id="close-sidebar" aria-label="Close menu">✕</button>
+        <a href="homepage.html">Home</a>
+        <a href="workoutHistory.html">Workouts</a>
+        <a href="weightProgress.html">Weight Tracker</a>
+    </nav>
+
+    <div class="container">
+        <h1>Weight Progress</h1>
+
+        <!-- Weight Logging Form -->
+        <div id="weight-tracker">
+            <h2>Log Weight Progress</h2>
+            <form id="progress-form">
+                <label for="weight-date">Date:</label>
+                <input type="date" id="weight-date" name="date" required>
+
+                <label for="body-weight">Weight (kg):</label>
+                <input type="number" id="body-weight" name="weight" required>
+
+                <button type="submit">Log Progress</button>
+            </form>
+
+            <!-- Display Logged Weight Progress -->
+            <div id="logged-weight">
+                <h3>Last Weigh-In</h3>
+                <div id="current-weight">No weight entries logged yet.</div>
+            </div>
+        </div>
+
+        <!-- Progress Chart Display -->
+        <div id="progress-log">
+            <h3>Progress Chart</h3>
+            <canvas id="progress-chart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Footer Section -->
+        <footer>
+            <p>&copy; 2026 Gym Tracker</p>
+        </footer>
+    </div>
+</body>
+</html>
